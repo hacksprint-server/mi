@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="1.jpg">
     <title>Minecraft Madness by Namdapha</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
@@ -96,8 +97,8 @@
             text-shadow: 1px 1px #000;
             box-shadow: 0 4px 0 #3d8b40;
             animation: pulse 2s infinite;
-            display: inline-block;
             text-decoration: none;
+            display: inline-block;
         }
 
         .btn:hover {
@@ -108,17 +109,14 @@
         }
 
         .footer {
-            background-color: #2d2d2d;
-            padding: 40px 20px;
-            text-align: center;
-            border-top: 5px solid #6b6b6b;
-            position: relative;
             position: relative;
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
             url('33.jpg.avif') center/cover;
             padding: 60px 20px 40px;
             isolation: isolate;
+            border-bottom: 5px solid #6bff6b;
         }
+
         .footer::before {
             content: '';
             position: absolute;
@@ -126,47 +124,61 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('33.jpg.avif') center/cover;
+            background: url('https://i.imgur.com/8N7OyWi.png') center/cover;
             z-index: -1;
             opacity: 0.4;
         }
 
         .footer-content {
+            position: relative;
+            z-index: 2;
             max-width: 600px;
             margin: 0 auto;
             line-height: 2;
-            position: relative;
-            z-index: 2;
         }
+
         .footer p {
             text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
         }
 
-        h2 {
-            margin-bottom: 30px;
-            font-size: 1.5em;
-            text-shadow: 2px 2px #000;
+        .volume-controls {
+            position: fixed;
+            bottom: 150px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
         }
 
-        .video-control {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
+        .volume-slider {
+            -webkit-appearance: none;
+            width: 120px;
+            height: 15px;
+            background: #3a3a3a;
+            border: 3px solid #6b6b6b;
+            border-radius: 5px;
+            transform: rotate(-90deg);
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
             background: #4CAF50;
             border: 3px solid #3d8b40;
-            padding: 10px;
+            border-radius: 3px;
             cursor: pointer;
-            border-radius: 5px;
-            z-index: 100;
         }
-        @media (max-width: 768px) {
-            .footer {
-                padding: 40px 15px 30px;
-            }
-            
-            .footer::before {
-                opacity: 0.3;
-            }
+
+        .volume-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #4CAF50;
+            border: 3px solid #3d8b40;
+            border-radius: 3px;
+            cursor: pointer;
         }
 
         @keyframes blink {
@@ -185,31 +197,21 @@
             .timer {
                 font-size: 1.3em;
                 padding: 15px 25px;
-                margin: 20px 0;
             }
-
             .btn {
                 padding: 15px 25px;
                 font-size: 0.9em;
             }
-
-            h2 {
-                font-size: 1.2em;
-                margin-bottom: 20px;
-            }
-
-            .logo {
-                max-width: 80px;
-                top: 15px;
-                right: 15px;
-            }
-
-            .video-control {
-                bottom: 80px;
+            .volume-controls {
+                bottom: 120px;
                 right: 10px;
-                padding: 8px;
+            }
+            .volume-slider {
+                width: 80px;
+                height: 12px;
             }
         }
+
 
         /* Character Section Styles */
         .hero-characters {
@@ -285,12 +287,19 @@
             }
         }
 
-
-
     </style>
 </head>
 <body>
-    <button class="btn video-control" id="videoControl">🔇 Sound Off</button>
+    <div class="volume-controls">
+        <input type="range" 
+               class="volume-slider" 
+               id="volumeSlider" 
+               min="0" 
+               max="1" 
+               step="0.1" 
+               value="1">
+        <button class="btn video-control" id="videoControl">🔊 Sound On</button>
+    </div>
 
     <header class="header">
         <h1>MINECRAFT MADNESS</h1>
@@ -298,13 +307,13 @@
 
     <section class="hero">
         <div class="hero-characters"></div>
-            <img src="3.png" 
-                 class="character-left" 
-                 alt="Minecraft Steve">
-            <img src="4.png" 
-                 class="character-right" 
-                 alt="Minecraft Alex">
-        </div>
+        <img src="3.png" 
+             class="character-left" 
+             alt="Minecraft Steve">
+        <img src="4.png" 
+             class="character-right" 
+             alt="Minecraft Alex">
+    </div>
         <div class="logo">
             <img src="2.png" 
                  alt="Minecraft Logo" 
@@ -317,37 +326,15 @@
 
         <h2>TOURNAMENT BEGINS IN:</h2>
         <div class="timer" id="timer">00d 00h 00m 00s</div>
-       
+        
         
         <div class="buttons">
-             <a href="https://forms.gle/YJnRcFy38CzAbWz48" class="btn" target="_blank">REGISTER NOW</a>
-            <a href="https://example.com/rules" class="btn" target="_blank">RULE BOOK</a>
+            <a href="https://forms.gle/YJnRcFy38CzAbWz48" class="btn" target="_blank">REGISTER NOW</a>
+            <a href="#" class="btn" target="_blank">RULE BOOK</a>
         </div>
     </section>
 
     <footer class="footer">
-        
-        <!-- <div class="footer-characters">
-            <img src="5.png" 
-                 class="footer-character" 
-                 alt="Steve">
-            <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4f/Alex_%28Default%29.png" 
-                 class="footer-character" 
-                 alt="Alex">
-            <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/32/Zombie.png" 
-                 class="footer-character" 
-                 alt="Zombie">
-            <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/44/Creeper.png" 
-                 class="footer-character" 
-                 alt="Creeper">
-            <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/14/Enderman.png" 
-                 class="footer-character" 
-                 alt="Enderman">
-            <img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/49/Skeleton.png" 
-                 class="footer-character" 
-                 alt="Skeleton">
-        </div> -->
-        
         <div class="footer-content">
             <p>Contact Us: 24f2001089@ds.study.iitm.ac.in</p>
             <p>Organized by Namdapha House</p>
@@ -357,7 +344,7 @@
 
     <script>
         // Countdown Timer
-        const tournamentDate = new Date('2025-02-04T11:30:00').getTime();
+        const tournamentDate = new Date('2025-02-04T10:30:24').getTime();
 
         function updateTimer() {
             const now = new Date().getTime();
@@ -383,15 +370,24 @@
         const timerInterval = setInterval(updateTimer, 1000);
         updateTimer();
 
-        // Video Handling
+        // Video and Volume Control
         const video = document.getElementById('bg-video');
+        const volumeSlider = document.getElementById('volumeSlider');
         const videoControl = document.getElementById('videoControl');
-        let isMuted = true;
+        let isMuted = false;
 
-        video.play().catch(error => {
-            videoControl.style.display = 'block';
+        // Initialize video settings
+        video.volume = 1;
+        video.muted = false;
+
+        // Volume Slider Control
+        volumeSlider.addEventListener('input', (e) => {
+            video.volume = e.target.value;
+            video.muted = false;
+            videoControl.textContent = "🔊 Sound On";
         });
 
+        // Mute Button Control
         videoControl.addEventListener('click', () => {
             isMuted = !isMuted;
             video.muted = isMuted;
@@ -399,12 +395,12 @@
             if (!isMuted) video.play();
         });
 
-        // Logo Interaction
-        document.querySelector('.logo').addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Handle video autoplay
+        video.play().catch(error => {
+            videoControl.style.display = 'block';
         });
 
-        // Button Animation Handling
+        // Button Animations
         document.querySelectorAll('.btn').forEach(button => {
             button.addEventListener('mouseover', () => {
                 button.style.animation = 'none';
